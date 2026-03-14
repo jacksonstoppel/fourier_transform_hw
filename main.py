@@ -4,6 +4,7 @@ import time
 from scipy.fft import fft
 from scipy.integrate import solve_ivp
 
+# define math functions for problems
 def prob1_analytic(k):
     return np.sqrt(np.pi / 50.0) * np.exp(-(np.pi**2) * k**2 / 50.0) * np.exp(-1j * np.pi * k)
 
@@ -13,9 +14,11 @@ def func_prob1(x):
 
     
 
+# create DFT and inverse DFT
 def DFT(x):
     N = len(x)
     X = np.zeros(N, dtype=complex)
+    #sum over all k and x values
     for k in range(N):
         s = 0.0 + 0.0j
         for n in range(N):
@@ -23,6 +26,7 @@ def DFT(x):
         X[k] = s / N
     return X
 
+# inverse DFT
 def inverse_DFT(X):
     N = len(X)
     x = np.zeros(N, dtype=complex)
@@ -34,6 +38,7 @@ def inverse_DFT(X):
     return x
 
 
+# Generate the correct k values
 def signed_k_vals(N):
     k = np.arange(N)
     return np.where(k < N // 2, k, k - N)
@@ -42,7 +47,7 @@ Ns = [32, 64, 128]
 
 plt.figure(figsize=(8, 5))
 
-
+# create and plot the data for problem 1
 k_cont = np.linspace(-10, 10, 1000)
 plt.plot(k_cont, np.abs(prob1_analytic(k_cont)), label='Analytical FT', linewidth=2)
 
